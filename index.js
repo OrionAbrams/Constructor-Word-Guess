@@ -58,7 +58,7 @@ function askForLetter() {
     inquirer.prompt([
         {
             name: "guess",
-            message: "\n Guess a letter!",
+            message: "\nGuess a letter!",
             validate: function (value) {
                 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
                 var flag = false;
@@ -85,10 +85,10 @@ function askForLetter() {
             else guessAgain = true
         }
         charactersGuessed.push(answer.guess)
-        console.log("Already guessed: " + charactersGuessed)
+        console.log("Already guessed: " + charactersGuessed + "\n")
         if (!gotGuess && guessAgain) {
             guessesRemaining--
-            console.log("\n Wrong! You have " + guessesRemaining + " guesses left! \n")
+            console.log("Wrong! You have " + guessesRemaining + " guesses left! \n")
             if (guessesRemaining === 0) {
                 console.log("Out of guesses! You lose!")
                 ask();
@@ -122,6 +122,6 @@ function letterChecker(guess) {
         }
     }
     if (gotGuess) {
-        console.log("\n Correct! You're almost a pokemon trainer! \n")
+        console.log("\nCorrect! You're almost a pokemon trainer! You still have " + guessesRemaining + " guesses left! \n")
     }
 }
