@@ -1,16 +1,19 @@
 var Letter = require("./Letter.js");
 
 function Word(word){
-    this.name = word
+    var that = this
+    this.word = word
     this.letters = []
     this.addLetters = function(letter) {
         this.letters.push(new Letter(letter));
         console.log(this.letters.length)
       };
-    this.string = function(x){
-        for (var i = 0; i < this.letters.length; i++){
-            var letter = new Letter(x)
-            letter.disp()
+    this.string = function(){
+        for (var i = 0; i < this.word.length; i++){
+            var letter = new Letter(this.word[i])
+            this.letters.push(letter)
+            console.log(this.letters)
+            // letter.disp()
 
         }
 
@@ -19,7 +22,7 @@ function Word(word){
         this.letterChecker(answer)
     }
 }
+
 var firstWord = new Word("Blue")
-firstWord.addLetters(this.name)
 firstWord.string()
-module.exports = Word
+console.log(firstWord.letters)
