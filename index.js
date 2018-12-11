@@ -66,11 +66,6 @@ function askForLetter() {
                 for (var i = 0; i < alphabet.length; i++) {
                     if (value === alphabet[i]) {
                         flag = true;
-                        for (var j = 0; j < currentWord.letters.length; j++) {
-                            if (value === currentWord.letters[i]) {
-                                flag = false;
-                            }
-                        }
                     }
                 }
                 return flag;
