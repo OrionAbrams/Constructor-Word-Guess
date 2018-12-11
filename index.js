@@ -2,11 +2,13 @@ var inquirer = require("inquirer")
 var Word = require("./Word.js")
 var wordAnswers = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate", "spearow", "fearow", "ekans", "arbok", "pikachu", "raichu", "sandshrew", "sandslash", "nidoran", "nidorina", "nidoqueen", "nidoran", "nidorino", "nidoking", "clefairy", "clefable", "vulpix", "ninetales", "jigglypuff", "wigglytuff", "zubat", "golbat", "oddish", "gloom", "vileplume", "paras", "parasect", "venonat", "venomoth", "diglett", "dugtrio", "meowth", "persian", "psyduck", "golduck", "mankey", "primeape", "growlithe", "arcanine", "poliwag", "poliwhirl", "poliwrath", "abra", "kadabra", "alakazam", "machop", "machoke", "machamp", "bellsprout", "weepinbell", "victreebel", "tentacool", "tentacruel", "geodude", "graveler", "golem", "ponyta", "rapidash", "slowpoke", "slowbro", "magnemite", "magneton", "farfetch'd", "doduo", "dodrio", "seel", "dewgong", "grimer", "muk", "shellder", "cloyster", "gastly", "haunter", "gengar", "onix", "drowzee", "hypno", "krabby", "kingler", "voltorb", "electrode", "exeggcute", "exeggutor", "cubone", "marowak", "hitmonlee", "hitmonchan", "lickitung", "koffing", "weezing", "rhyhorn", "rhydon", "chansey", "tangela", "kangaskhan", "horsea", "seadra", "goldeen", "seaking", "staryu", "starmie", "mr. mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew"]
 var randNumber
+var charactersGuessed = []
 var newWordArray = []
 var currentWord
 var guessesRemaining
 var gotGuess = false
 var wholeWordGuessed = false
+var guessAgain = true
 
 console.log("\n")
 console.log("The 150 original pokemon hangman terminal game!")
@@ -15,6 +17,7 @@ console.log('* * * * * * * * * * * * * * * * * * * * * * * *')
 console.log("\n")
 
 function resetWord() {
+    charactersGuessed = []
     randNumber = Math.floor(Math.random() * wordAnswers.length)
     currentWord = new Word(wordAnswers[randNumber])
     guessesRemaining = 10
@@ -54,27 +57,36 @@ function ask() {
 function askForLetter() {
     inquirer.prompt([
         {
-            name : "guess",
-            message : "\n Guess a letter!",
-            validate : function(value) {
+            name: "guess",
+            message: "\n Guess a letter!",
+            validate: function (value) {
                 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
                 var flag = false;
                 for (var i = 0; i < alphabet.length; i++) {
-                  if (value === alphabet[i]) {
-                    flag = true;
-                    for (var j = 0; j < currentWord.letters.length; j++) {
-                      if (value === currentWord.letters[i]) {
-                        flag = false;
-                      }
+                    if (value === alphabet[i]) {
+                        flag = true;
+                        for (var j = 0; j < currentWord.letters.length; j++) {
+                            if (value === currentWord.letters[i]) {
+                                flag = false;
+                            }
+                        }
                     }
-                  }
                 }
                 return flag;
-              }
+            }
         }
     ]).then(function (answer) {
         letterChecker(answer.guess)
-        if (gotGuess === false) {
+        for (var i = 0; i < charactersGuessed.length; i++) {
+            if (answer.guess === charactersGuessed[i]) {
+                console.log("Already guessed that!")
+                guessAgain = false
+            }
+            else guessAgain = true
+        }
+        charactersGuessed.push(answer.guess)
+        console.log("Already guessed: " + charactersGuessed)
+        if (!gotGuess && guessAgain) {
             guessesRemaining--
             console.log("\n Wrong! You have " + guessesRemaining + " guesses left! \n")
             if (guessesRemaining === 0) {
@@ -109,7 +121,7 @@ function letterChecker(guess) {
             gotGuess = true
         }
     }
-    if (gotGuess = true){
+    if (gotGuess) {
         console.log("\n Correct! You're almost a pokemon trainer! \n")
     }
 }
