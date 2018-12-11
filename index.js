@@ -40,7 +40,7 @@ function ask() {
     inquirer.prompt([
         {
             type: "confirm",
-            message: "Play again?",
+            message: "\nPlay again?",
             name: "confirm"
         }
     ]).then(function (response) {
@@ -48,7 +48,7 @@ function ask() {
             resetWord()
         }
         else {
-            console.log("Buh-bye til next time!")
+            console.log("\nBuh-bye til next time!\n")
             process.exit()
         }
     })
@@ -60,7 +60,8 @@ function askForLetter() {
             name: "guess",
             message: "\nGuess a letter!",
             validate: function (value) {
-                var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+                var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
                 var flag = false;
                 for (var i = 0; i < alphabet.length; i++) {
                     if (value === alphabet[i]) {
@@ -76,14 +77,14 @@ function askForLetter() {
             }
         }
     ]).then(function (answer) {
-        letterChecker(answer.guess)
+        letterChecker(answer.guess.toLowerCase())
         for (var i = 0; i < charactersGuessed.length; i++) {
-            if (answer.guess != charactersGuessed[i]) {
+            if (answer.guess.toLowerCase() != charactersGuessed[i].toLowerCase()) {
             }
             else {
                 console.log("Already guessed that!")
 
-                if (charactersGuessed[i] === charactersGuessed[i]) {
+                if (charactersGuessed[i].toLowerCase() === charactersGuessed[i].toLowerCase()) {
                     charactersGuessed.splice(i, 1)
                 }
                 hasGuessedThatCharacter = true
@@ -120,6 +121,7 @@ function askForLetter() {
 }
 
 function letterChecker(guess) {
+    console.log(guess)
     for (var i = 0; i < currentWord.letters.length; i++) {
         if (guess === currentWord.letters[i].letter) {
             currentWord.letters[i].letterGuessed = true
