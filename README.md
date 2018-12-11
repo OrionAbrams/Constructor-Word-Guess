@@ -8,4 +8,6 @@ Learning to code with constructors is what pushed me to put myself through this.
 
 # Code Example
 
+This is some code I used after the inquirer prompt, so when the user enters a letter.
+
 ![Essential Code](/images/example.png?raw=true "Essential code")
