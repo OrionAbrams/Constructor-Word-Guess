@@ -80,6 +80,9 @@ function askForLetter() {
         for (var i = 0; i < charactersGuessed.length; i++) {
             if (answer.guess === charactersGuessed[i]) {
                 console.log("Already guessed that!")
+                if (charactersGuessed[i] === charactersGuessed[i]){
+                charactersGuessed.splice(i, 1)
+                }
                 guessAgain = false
             }
             else guessAgain = true
