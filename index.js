@@ -8,7 +8,7 @@ var currentWord
 var guessesRemaining
 var gotGuess = false
 var wholeWordGuessed = false
-var guessAgain = true
+var hasNotGuessedThatCharacter = true
 
 console.log("\n")
 console.log("The 150 original pokemon hangman terminal game!")
@@ -78,18 +78,21 @@ function askForLetter() {
     ]).then(function (answer) {
         letterChecker(answer.guess)
         for (var i = 0; i < charactersGuessed.length; i++) {
-            if (answer.guess === charactersGuessed[i]) {
-                console.log("Already guessed that!")
-                if (charactersGuessed[i] === charactersGuessed[i]){
-                charactersGuessed.splice(i, 1)
-                }
-                guessAgain = false
+            if (answer.guess != charactersGuessed[i]) {
+                hasNotGuessedThatCharacter = true
             }
-            else guessAgain = true
+            else {
+                console.log("Already guessed that!")
+
+                if (charactersGuessed[i] === charactersGuessed[i]) {
+                    charactersGuessed.splice(i, 1)
+                }
+                hasNotGuessedThatCharacter = false
+            }
         }
         charactersGuessed.push(answer.guess)
         console.log("Already guessed: " + charactersGuessed + "\n")
-        if (!gotGuess && guessAgain) {
+        if (!gotGuess && hasNotGuessedThatCharacter) {
             guessesRemaining--
             console.log("Wrong! You have " + guessesRemaining + " guesses left! \n")
             if (guessesRemaining === 0) {
