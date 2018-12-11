@@ -79,7 +79,6 @@ function askForLetter() {
         letterChecker(answer.guess)
         for (var i = 0; i < charactersGuessed.length; i++) {
             if (answer.guess != charactersGuessed[i]) {
-                hasNotGuessedThatCharacter = true
             }
             else {
                 console.log("Already guessed that!")
@@ -87,12 +86,13 @@ function askForLetter() {
                 if (charactersGuessed[i] === charactersGuessed[i]) {
                     charactersGuessed.splice(i, 1)
                 }
-                hasNotGuessedThatCharacter = false
+                hasNotGuessedThatCharacter = true
             }
         }
         charactersGuessed.push(answer.guess)
         console.log("Already guessed: " + charactersGuessed + "\n")
-        if (!gotGuess && hasNotGuessedThatCharacter) {
+        if (!gotGuess && !hasNotGuessedThatCharacter) {
+
             guessesRemaining--
             console.log("Wrong! You have " + guessesRemaining + " guesses left! \n")
             if (guessesRemaining === 0) {
@@ -130,4 +130,5 @@ function letterChecker(guess) {
     if (gotGuess) {
         console.log("\nCorrect! You're almost a pokemon trainer! You still have " + guessesRemaining + " guesses left! \n")
     }
+    else hasNotGuessedThatCharacter = false
 }
