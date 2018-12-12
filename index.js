@@ -107,7 +107,7 @@ function askForLetter() {
             }
         }
         if (wholeWordGuessed) {
-            console.log("Congrats! You got it!")
+            console.log("\nCongrats! You got it!")
             ask();
             return
         }
